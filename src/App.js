@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import Modal from "./Modal";
 
-function App() {
+export default function App() {
+  const [isShow, setIsShow] = useState(false);
+  const [isOfferAccepted, setIsOfferAccepted] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsShow(true);
+  };
+
+  const handleOfferIsAccept = () => {
+    setIsOfferAccepted(true);
+    setIsShow(false);
+  };
+
+  const handleClose = () => {
+    setIsShow(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className="show-offer">
+        {!isOfferAccepted && (
+          <button onClick={handleOpenModal} className="offer-btn">
+            Show Offer
+          </button>
+        )}
+        {isOfferAccepted && <div style={{ fontSize: 50 }}>Offer Accepted</div>}
+      </div>
+
+      {isShow && (
+        <Modal
+          handleClose={handleClose}
+          handleOfferIsAccept={handleOfferIsAccept}
+        />
+      )}
     </div>
   );
 }
-
-export default App;
